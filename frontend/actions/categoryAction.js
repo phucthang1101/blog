@@ -3,15 +3,15 @@ import { API } from '../config';
 
 
 export const createCategory = (category,token) => {
-  
+ 
     return fetch(`${API}/category`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+       
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(category),
+      body: category,
     })
       .then((response) => {
         return response.json();
@@ -21,6 +21,7 @@ export const createCategory = (category,token) => {
 
   
 export const getCategories = () => {
+
   return fetch(`${API}/categories`, {
     method: 'GET',
    
@@ -33,6 +34,7 @@ export const getCategories = () => {
 
 
 export const singleCategory = (slug) => {
+ 
   return fetch(`${API}/category/${slug}`, {
     method: 'GET',
   })
@@ -53,6 +55,26 @@ export const removeCategory = (slug,token) => {
       Authorization: `Bearer ${token}`
     },
    
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+
+export const updateCategory = (category, token, slug) => {
+//   for (var value of category.values()) {
+//     console.log('value: ',value); 
+//  }
+  return fetch(`${API}/category/${slug}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+
+      Authorization: `Bearer ${token}`,
+    },
+    body: category,
   })
     .then((response) => {
       return response.json();

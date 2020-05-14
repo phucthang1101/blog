@@ -5,6 +5,7 @@ import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } f
 import { isAuth, signout } from '../actions/authAction';
 import { APP_NAME } from '../config';
 import NProgress from 'nprogress';
+import SearchBlog from './blog/SearchBlog';
 
 Router.onRouteChangeStart = url => NProgress.start()
 Router.onRouteChangeComplete = url => NProgress.done()
@@ -16,7 +17,8 @@ const Header = (props) => {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <div>
+    <React.Fragment>
+    <SearchBlog/>
       <Navbar color='light' light expand='md'>
         <Link href='/'>
           <NavbarBrand style={{ cursor: 'pointer' }}>{APP_NAME}</NavbarBrand>
@@ -24,6 +26,11 @@ const Header = (props) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className='ml-auto' navbar>
+          <NavItem>
+                  <Link href='/blogs'>
+                    <NavLink style={{ cursor: 'pointer' }}>Blogs</NavLink>
+                  </Link>
+                </NavItem>
             {!isAuth() && (
               <React.Fragment>
                 <NavItem>
@@ -70,7 +77,7 @@ const Header = (props) => {
           </Nav>
         </Collapse>
       </Navbar>
-    </div>
+    </React.Fragment>
   );
 };
 

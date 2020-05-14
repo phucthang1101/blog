@@ -14,7 +14,14 @@ const categorySchema = new mongoose.Schema(
       unique: true,
       index: true,
     },
-  
+    categoryPhoto: {
+      data: Buffer,
+      contentType: String,
+    },
+    categoryDesc: {
+      type: String,
+      max: 1000,
+    },
   },
   { timestamps: true }
 );

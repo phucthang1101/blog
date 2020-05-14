@@ -1,14 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Router from 'next/router';
+import { withRouter } from 'next/router';
 import { isAuth, getCookie } from '../../actions/authAction';
 import {
   createCategory,
   getCategories,
   removeCategory,
 } from '../../actions/categoryAction';
+import { API,DOMAIN } from '../../config';
 
-const CategoryComponent = () => {
+const CategoryComponent = ({ router }) => {
+  //preview image:
+  const [file, setFile] = useState();
+  const [previewUrl, setPreviewUrl] = useState();
+  const filePickerRef = useRef();
+
   const [values, setValues] = useState({
     name: '',
     error: false,
@@ -16,72 +22,98 @@ const CategoryComponent = () => {
     reload: false,
     categories: [],
     removed: false,
+    formData: '',
+    categoryDesc:''
   });
-  const { name, error, reload, categories, removed, success } = values;
+  const {
+    name,
+    error,
+    reload,
+    categories,
+    removed,
+    success,
+    formData,
+    categoryDesc
+  } = values;
   const token = getCookie('token');
 
   useEffect(() => {
-    loadCategories();
-  }, [reload]);
+   loadCategories();
+  }, [router,reload]);
 
+  useEffect(() => {
+    if (!file) {
+      return;
+    }
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewUrl(fileReader.result);
+    };
+    fileReader.readAsDataURL(file);
+  }, [file]);
 
   const loadCategories = () => {
+   
+
     getCategories().then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        setValues({ ...values, categories: data });
+      //  setValues({ ...values,  });
+        setValues({ ...values, categories: data,formData: new FormData() });
       }
     });
   };
 
   const showCategories = () => {
+  
     return categories.map((category, index) => {
       return (
-        <button
-         
-          title='Double click to delete'
-          onDoubleClick={() => deleteConfirm(category.slug)}
+        <a
+          title='Click to update or delete category'
+          href={`${DOMAIN}/admin/update/category/${category.slug}`}
+        
           key={index}
           className='btn btn-outline-primary mr-1 ml-1 mt-3'
         >
           {category.name}
-        </button>
+          <small> {category.categoryDesc}</small>
+          <div className='row mx-auto' style={{ marginTop: '-30px' }}>
+            <img
+              src={`${API}/category/photo/${category.slug}`}
+              alt={category.name}
+              className='img img-fluid'
+            />
+          </div>
+        </a>
       );
     });
   };
 
-  const deleteConfirm = (slug) => {
-    let answer = window.confirm('Delete ?');
-    if (answer) {
-      deleteCategory(slug);
+
+  const handleChange = (name) => (e) => {
+   
+    const value = name === 'photo' ? e.target.files[0] : e.target.value;
+    formData.set(name, value);
+    setValues({ ...values, [name]: value, formData, error: '' });
+    if (name === 'photo') {
+      let pickedFile;
+
+      if (e.target.files && e.target.files.length === 1) {
+        pickedFile = e.target.files[0];
+        setFile(pickedFile);
+      } else {
+      }
     }
   };
-
-  const deleteCategory = (slug) => {
-    removeCategory(slug, token).then((data) => {
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        setValues({
-          ...values,
-          error: false,
-          success: false,
-          name: '',
-          removed: !removed,
-          reload: !reload,
-        });
-      }
-    });
-  };
-
   const clickSubmit = (e) => {
+    
     e.preventDefault();
     //why have to {name} => because when pass to create method
     // receive like this: name:'react'
     // fit with extraction in backend
     // {name} === name : 'name'
-    createCategory({ name }, token).then((data) => {
+    createCategory(formData, token).then((data) => {
       if (data.error) {
         setValues({
           ...values,
@@ -94,21 +126,22 @@ const CategoryComponent = () => {
           error: false,
           success: true,
           name: '',
+          categoryDesc:'',
           reload: !reload,
         });
       }
     });
   };
 
-  const handleChange = (e) => {
-    setValues({
-      ...values,
-      name: e.target.value,
-      error: false,
-      success: false,
-      removed: '',
-    });
-  };
+  // const handleChange = (e) => {
+  //   setValues({
+  //     ...values,
+  //     name: e.target.value,
+  //     error: false,
+  //     success: false,
+  //     removed: '',
+  //   });
+  // };
 
   const showSuccess = () => {
     if (success) {
@@ -129,34 +162,76 @@ const CategoryComponent = () => {
   };
 
   const mouseMoveHandler = (e) => {
+  
     setValues({ ...values, error: false, success: false, removed: '' });
   };
-  const newCategoryForm = () => (
-    <form onSubmit={clickSubmit}>
+
+  const pickImageHandler = () => {
+    filePickerRef.current.click();
+  };
+
+  const newCategoryForm = () =>{
+ 
+    return (
+      <form onSubmit={clickSubmit}>
+      <div className='form-group pb-2'>
+        <h5>Featured Image</h5>
+        <hr />
+        <div>
+          <small className='text-muted'>Max size: 1mb</small>
+        </div>
+        <div className='image-upload__preview'>
+          {previewUrl && <img src={previewUrl} alt='preview' />}
+          {!previewUrl && <p>abc</p>}
+        </div>
+        <label className='btn btn-outline-info'>
+          Upload Featured Image
+          <input
+            type='file'
+            accept='image/*'
+            onChange={handleChange('photo')}
+            hidden
+            ref={filePickerRef}
+            onClick={pickImageHandler}
+          />
+        </label>
+      </div>
+      <div>
       <div className='form-group'>
         <label className='text-muted'>Name</label>
         <input
           type='text'
           className='form-control'
-          onChange={handleChange}
+          onChange={handleChange('name')}
           value={name}
           required
         />
       </div>
-      <div>
+      <div className='form-group'>
+        <label className='text-muted'>categoryDesc</label>
+        <input
+          type='text'
+          className='form-control'
+          onChange={handleChange('categoryDesc')}
+          value={categoryDesc}
+          required
+        />
+      </div>
         <button type='submit' className='btn btn-primary'>
           Create
         </button>
       </div>
     </form>
-  );
+    )
+   
+  };
 
   return (
     <React.Fragment>
       {showSuccess()}
       {showError()}
       {showRemoved()}
-
+    
       <div onMouseMove={mouseMoveHandler}>
         {newCategoryForm()}
         {showCategories()}
@@ -165,4 +240,4 @@ const CategoryComponent = () => {
   );
 };
 
-export default CategoryComponent;
+export default withRouter(CategoryComponent);

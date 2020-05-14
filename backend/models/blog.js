@@ -39,8 +39,9 @@ const blogSchema = new mongoose.Schema(
       data: Buffer,
       contentType: String,
     },
-    category: [{ type: ObjectId, ref: 'Category', require: true }],
+    categories: [{ type: ObjectId, ref: 'Category', require: true }],
     tags: [{ type: ObjectId, ref: 'Tag', require: true }],
+    comments:[{type:ObjectId,ref:'Comment',require:false}],
     postedBy: {
       type: ObjectId,
       ref: 'User',
