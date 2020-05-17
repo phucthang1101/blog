@@ -3,11 +3,12 @@ import { initTimeline } from './initTimeline';
 
 const Experience = () => {
   useEffect(() => {
+  
     initTimeline();
-  });
+  },[]);
   return (
     <section id='section-5' className='cd-horizontal-timeline experience-area '>
-      <div className='row'>
+      <div className='row mx-0'>
         <div className='experience-title'>
           <h2>
             My <span> Experience</span>
@@ -41,12 +42,12 @@ const Experience = () => {
 
         <ul className='cd-timeline-navigation'>
           <li>
-            <a href='#0' className='prev inactive'>
+            <a href='#0' className='prev '>
               Prev
             </a>
           </li>
           <li>
-            <a href='#0' className='next inactive'>
+            <a href='#0' className='next '>
               Next
             </a>
           </li>

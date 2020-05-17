@@ -67,7 +67,6 @@ const Portfolio = () => {
   const [showLightBox, setShowLightBox] = useState(false);
   const [project, setProject] = useState();
   const openLightBoxHandler = (name) => {
-    
     setShowLightBox(true);
     setProject(name);
   };
@@ -99,24 +98,40 @@ const Portfolio = () => {
       <section
         className='portfolio-area dark-version portfolio-one bg-color-3 section-padding clearfix'
         id='portfolio'
+        style={{background:'#c5c5c5'}}
       >
         <div id='myBtnContainer'>
-          <button className='project-filter-btn active' onClick={() => filterSelection('all')}>
+          <button
+            className='btn project-filter-btn active'
+            onClick={() => filterSelection('all')}
+          >
             {' '}
-            Show all
+            Show all<span></span>
           </button>
-          <button className='btn project-filter-btn' onClick={() => filterSelection('asp')}>
+          <button
+            className='btn project-filter-btn'
+            onClick={() => filterSelection('asp')}
+          >
             {' '}
-            ASP.NET MVC
+            ASP.NET MVC<span></span>
           </button>
-          <button className='btn project-filter-btn' onClick={() => filterSelection('reactjs')}>
-            REACTJS
+          <button
+            className='btn project-filter-btn'
+            onClick={() => filterSelection('reactjs')}
+          >
+            REACTJS<span></span>
           </button>
-          <button className='btn project-filter-btn' onClick={() => filterSelection('nodejs')}>
-            NODEJS
+          <button
+            className='btn project-filter-btn'
+            onClick={() => filterSelection('nodejs')}
+          >
+            NODEJS<span></span>
           </button>
-          <button className='btn project-filter-btn' onClick={() => filterSelection('mernStack')}>
-            MERN STACK
+          <button
+            className='btn project-filter-btn'
+            onClick={() => filterSelection('mernStack')}
+          >
+            MERN STACK<span></span>
           </button>
         </div>
         <div className='portfolio-area container'>
@@ -296,7 +311,7 @@ const Portfolio = () => {
               </div>
 
               <div className='five grid-item ExpenseApp mernStack'>
-              <div className='overlay'>
+                <div className='overlay'>
                   <div className='items'></div>
                   <div className='items head'>
                     <p>Frist MERN App: Expense Tracker</p>
@@ -336,7 +351,7 @@ const Portfolio = () => {
                     </a>
                   </div>
                 </div>
-           </div>
+              </div>
 
               <div className='six grid-item personalWebsite reactjs'>
                 <div className='overlay'>
@@ -356,7 +371,7 @@ const Portfolio = () => {
               </div>
 
               <div className='seven grid-item locationSharing mernStack'>
-              <div className='overlay'>
+                <div className='overlay'>
                   <div className='items'></div>
                   <div className='items head'>
                     <p>MERN Stack App: Location Sharing</p>
@@ -396,7 +411,7 @@ const Portfolio = () => {
                     </a>
                   </div>
                 </div>
-             </div>
+              </div>
             </div>
           </div>
         </div>

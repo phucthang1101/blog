@@ -10,7 +10,11 @@ const FullWidthNav = (props) => {
   };
   return (
     <li className={`item -${active ? 'active' : ''}`}>
-      <a className='link' title={slide.name} onClick={() => handleClick(slide.index)}>
+      <a
+        className='link'
+        title={slide.name}
+        onClick={() => handleClick(slide.index)}
+      >
         {slide.name}
       </a>
     </li>
@@ -24,7 +28,7 @@ const FullWidthNavs = (props) => {
       {slides.map((slide, index) => (
         <FullWidthNav
           key={index}
-          active={activeSlide === index}
+          active={activeSlide === index || activeSlide === slide.name}
           slide={slide}
           {...props}
         />

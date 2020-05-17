@@ -44,7 +44,7 @@ exports.create = (req, res) => {
 };
 
 exports.list = (req, res) => {
-  console.log('list:');
+ // console.log('list:');
   Category.find({}).exec((err, data) => {
     if (err) {
       return res.status(400).json({
@@ -57,7 +57,7 @@ exports.list = (req, res) => {
 
 exports.read = (req, res) => {
   const slug = req.params.slug.toLowerCase();
- console.log('read')
+ //console.log('read')
   Category.findOne({ slug }).exec((err, category) => {
     if (err) {
       return res.status(400).json({
@@ -86,7 +86,7 @@ exports.read = (req, res) => {
 
 exports.remove = (req, res) => {
   const slug = req.params.slug.toLowerCase();
-  console.log('remove')
+ // console.log('remove')
   Category.findOneAndRemove({ slug }).exec((err, data) => {
     if (err) {
       return res.status(400).json({
@@ -102,7 +102,7 @@ exports.remove = (req, res) => {
 
 exports.photo = (req, res) => {
   const slug = req.params.slug.toLowerCase();
-console.log('category photo')
+//console.log('category photo')
   Category.findOne({ slug })
     .select('categoryPhoto')
     .exec((err, category) => {
@@ -119,7 +119,7 @@ console.log('category photo')
 
 exports.update = (req, res) => {
   const slug = req.params.slug.toLowerCase();
-  console.log('slug update : ',slug)
+  //console.log('slug update : ',slug)
   Category.findOne({ slug }).exec((err, oldCategory) => {
     if (err) {
       return res.status(400).json({

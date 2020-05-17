@@ -289,7 +289,7 @@ const SingleBlog = ({ blog, router, query }) => {
   return (
     <React.Fragment>
       {head()}
-      <Layout>
+   
         <main>
           <article>
             <div className='container-fluid'>
@@ -382,7 +382,7 @@ const SingleBlog = ({ blog, router, query }) => {
             </div>
           </article>
         </main>
-      </Layout>
+     
     </React.Fragment>
   );
 };

@@ -2,10 +2,14 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 import Layout from '../../components/Layout';
-import { useState } from 'react';
-import { listBlogWithCategoriesAndTags } from '../../actions/blogAction';
+import { useState, useEffect, useCallback } from 'react';
+import {
+  listBlogWithCategoriesAndTags,
+  listRelatedBlogs,
+} from '../../actions/blogAction';
 import CardBlog from '../../components/blog/CardBlog';
 import { API, DOMAIN, APP_NAME, FB_APP_ID } from '../../config';
+import { singleCategory } from '../../actions/categoryAction';
 
 const Blogs = ({
   blogs,
@@ -51,6 +55,19 @@ const Blogs = ({
   const [skip, setSkip] = useState(0);
   const [size, setSize] = useState(totalBlogs);
   const [loadedBlogs, setLoadedBlogs] = useState([]);
+  const [separatorHeight, setSeparatorHeight] = useState(0);
+  const [categoryWithLength, setCategoryWithLength] = useState([]);
+
+  useEffect(() => {
+    tempGetCategoryLength();
+  }, [categories]);
+
+  //   useCallback(
+  //       () => {
+  //         tempGetCategoryLength()
+  //       },
+  //       [categories],
+  //   )
 
   const loadMore = () => {
     let toSkip = skip + limit;
@@ -76,11 +93,19 @@ const Blogs = ({
     );
   };
 
+  const setHeight = (height) => {
+    // console.log(height)
+    setSeparatorHeight(height);
+  };
+
   const showAllBlogs = () => {
     return blogs.map((blog, index) => {
       return (
         <article key={index}>
-          <CardBlog blog={blog} />
+          <CardBlog
+            blog={blog}
+            getHeightHeader={(height) => setHeight(height)}
+          />
           <hr />
         </article>
       );
@@ -88,19 +113,55 @@ const Blogs = ({
   };
 
   const showAllCategories = () => {
-    return categories.map((category, index) => (
-      <Link href={`/categories/${category.slug}`} key={index}>
-        <a className='btn btn-primary mr-1 ml-1 mt-3'>{category.name}</a>
-      </Link>
-    ));
+    return (
+      categoryWithLength.length === categories.length &&
+      categoryWithLength.map((category, index) => {
+        // console.log('category: ', category);
+        return (
+          <Link href={`/categories/${category.slug}`} key={index}>
+            <a className='info-category__url'>
+              {category.name} ({category.length})
+            </a>
+          </Link>
+        );
+      })
+    );
+  };
+
+  const tempGetCategoryLength = () => {
+    getBlogsByCategory(categories).then((data) => {
+      setCategoryWithLength(data);
+    });
+  };
+
+  const getBlogsByCategory = async (categories) => {
+    //Map and Execute the Promises
+    //console.log('promise');
+    return Promise.all(
+      categories.map(async (category, index) => {
+        try {
+          let blogsByCategory = await singleCategory(category.slug);
+
+          return {
+            name: category.name,
+            slug: category.slug,
+            length: blogsByCategory.blogs.length,
+          };
+        } catch (error) {
+          next(error);
+        }
+      })
+    );
   };
 
   const showAllTags = () => {
-    return tags.map((tag, index) => (
-      <Link href={`/tags/${tag.slug}`} key={index}>
-        <a className='btn btn-outline-primary mr-1 ml-1 mt-3'>{tag.name}</a>
-      </Link>
-    ));
+    return tags.map((tag, index) => {
+      return (
+        <Link href={`/tags/${tag.slug}`} key={index}>
+          <a className='info-tag__url'>{tag.name}</a>
+        </Link>
+      );
+    });
   };
 
   const showLoadedBlogs = () => {
@@ -112,38 +173,77 @@ const Blogs = ({
     ));
   };
 
+  const showSocialMedia = () => {
+    return (
+      <div className='social-media__icons'>
+        <a href='facebook.com'>
+          <i className='fa fa-facebook' aria-hidden='true'></i>
+        </a>
+        <a href='facebook.com'>
+          <i className='fa fa-twitter' aria-hidden='true'></i>
+        </a>
+        <a href='facebook.com'>
+          <i class='fa fa-instagram' aria-hidden='true'></i>
+        </a>
+        <a href='facebook.com'>
+          <i class='fa fa-github' aria-hidden='true'></i>
+        </a>
+        <a href='facebook.com'>
+          <i class='fa fa-envelope'></i>
+        </a>
+      </div>
+    );
+  };
+
   return (
     <React.Fragment>
       {head()}
-      <Layout>
-        <main>
-          <div className='container-fluid'>
-            <header>
-              <div className='col-md-12 pt-3'>
-                <h1 className='display-4 font-weight-bold text-center'>
-                  All Blogs
-                </h1>
-              </div>
-              <section>
-                <div className='pb-5 text-center'>
-                  {showAllCategories()}
-                  <br />
-                  {showAllTags()}
-                </div>
-              </section>
-            </header>
-          </div>
+      <Layout categories={categories} activeSlide={categories[0].name}>
+        <div>
+         
           <div className='container-fluid all-blogs-inner'>
             <div className='row mx-auto'>
               <div className='col-12 col-md-9'>{showAllBlogs()}</div>
-              <div className='d-none d-md-block col-md-3'></div>
+              <div className='d-none d-md-block col-md-3 '>
+                <aside className='info-sidebar'>
+                  {!!separatorHeight && (
+                    <div
+                      className='separator-white-holder'
+                      style={{ height: separatorHeight + 'px' }}
+                    ></div>
+                  )}
+                  <div className='info-section'>
+                    <a className='info-section__url'>
+                      <img
+                        src={`${DOMAIN}/static/images/avatarEdited.jpg`}
+                        alt='Matthew'
+                        className='info-section__avatar--img '
+                      />
+                    </a>
+                    <h5 className='info-section__name'>Matthew</h5>
+                    <h6 className='info-section__job'>Web developer</h6>
+                  </div>
+                  <div className='info-category'>
+                    <h5 className='info-category__title'>Categories</h5>
+                    {showAllCategories()}
+                  </div>
+                  <div className='info-tags'>
+                    <h5 className='info-tags__title'>Tags</h5>
+                    {showAllTags()}
+                  </div>
+                  <div className='info-follow'>
+                    <h5 className='info-follow__title'>Follow me</h5>
+                    {showSocialMedia()}
+                  </div>
+                </aside>
+              </div>
             </div>
           </div>
           <div className='container-fluid'>{showLoadedBlogs()}</div>
           <div className='text-center pt-5 pb-5 text-center'>
             {loadMoreButton()}
           </div>
-        </main>
+        </div>
       </Layout>
     </React.Fragment>
   );

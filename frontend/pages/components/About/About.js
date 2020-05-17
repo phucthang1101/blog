@@ -1,15 +1,22 @@
 import React from 'react';
-import {  DOMAIN } from '../../../config';
+import { DOMAIN } from '../../../config';
 
 const About = () => {
   return (
     <section id='section-2' className='about-section'>
       <div className='about-section__title text-center mb-40'>
-        <h2 className='mb-20 white-color'>About Me</h2>
-        <div className='horizontal-line'>
+        <div className='row mx-0'>
+          <div className='service-title'>
+            <h2>
+              About <span>Me </span>
+            </h2>
+            <div className='horizontal-line'>
           <div className='top'></div>
           <div className='bottom'></div>
         </div>
+          </div>
+        </div>
+       
       </div>
       <div className='about-section__content row mx-5 mt-5'>
         <div className='col-md-5 col-sm-12'>
@@ -22,8 +29,8 @@ const About = () => {
             <h2>Front-End developer</h2>
             <p>
               I am <span>Matthew Tran</span>. I am a simple , co-operative,
-                responsible and weird person. I always analyze things carefully 
-                before starting any work.
+              responsible and weird person. I always analyze things carefully
+              before starting any work.
             </p>
             <p>
               I have vast experience in HTML5, CSS3, Javascript, JQuery, Node js
@@ -66,32 +73,34 @@ const About = () => {
                   <li>
                     {' '}
                     <span className='title'>Hobby</span>{' '}
-                    <span className='value'>Coding , Blowing balloons by my nose</span>{' '}
+                    <span className='value'>
+                      Coding , Blowing balloons by my nose
+                    </span>{' '}
                   </li>
                 </ul>
               </div>
             </div>
             <div className='row'>
-            <div className='trapdoor'>
-              <div className='top door'></div>
-              <div className='bottom door'></div>
-              <a
-                href='#contact'
-                className='twitter-follow-button'
-                data-show-count='false'
-                data-size='large'
-                data-dnt='false'
-              >
-                <i className='fa fa-arrow-down' aria-hidden='true'></i>
-              </a>
-            </div>
-            {/* <a href='#skills-bd' className='skill-btn btn-a'>
+              <div className='trapdoor'>
+                <div className='top door'></div>
+                <div className='bottom door'></div>
+                <a
+                  href='#contact'
+                  className='twitter-follow-button'
+                  data-show-count='false'
+                  data-size='large'
+                  data-dnt='false'
+                >
+                  <i className='fa fa-arrow-down' aria-hidden='true'></i>
+                </a>
+              </div>
+              {/* <a href='#skills-bd' className='skill-btn btn-a'>
               my skills
             </a> */}
-            <div className="ct-btn">
-                <button className="border-neon">Download CV</button>
-            </div>
-            {/* <div>
+              <div className='ct-btn'>
+                <button className='border-neon'>Download CV</button>
+              </div>
+              {/* <div>
             <a
               href='images/about/demo-cv.png'
               className='down-btn btn-a'
@@ -100,10 +109,7 @@ const About = () => {
               download cv
             </a>
             </div> */}
-          
             </div>
-
-           
           </div>
         </div>
       </div>

@@ -2,13 +2,24 @@ import Link from 'next/link';
 import renderHTML from 'react-render-html';
 import moment from 'moment';
 import { API } from '../../config';
+import { useEffect, useRef } from 'react';
 
-const CardBlog = ({ blog }) => {
+const CardBlog = (props) => {
+ const { blog } = props
+  const headerBlog = useRef(null);
+
+  useEffect(() => {
+ //   console.log(headerBlog.current.clientHeight)
+   // console.log(key)
+    props.getHeightHeader(headerBlog.current.clientHeight)
+    
+  })
+
   const showBlogCategories = (blog) =>
     blog.categories.map((category, index) => {
       return (
         <Link key={index} href={`/categories/${category.slug}`}>
-          <a className='btn btn-primary mr-1 ml-1 mt-3'>{category.name}</a>
+          <p className='moment-month'>{category.name}</p>
         </Link>
       );
     });
@@ -23,7 +34,55 @@ const CardBlog = ({ blog }) => {
     });
 
   return (
-    <div className='lead pb-4'>
+    <React.Fragment>
+      <div className='card-blog__header'>
+        <div ref={headerBlog} className='row mx-auto card-blog__header-info'>
+          <div className='col-2 card-blog__header--moment'>
+            <div className='moment-day'>
+              {moment(blog.updatedAt).toObject().date}
+            </div>
+            <div className='moment-month'>
+              {moment(blog.updatedAt).format('MMMM')}
+            </div>
+          </div>
+          <div className='col-10 card-blog__header--url'>
+            <h2 className='url-title'>
+              <Link href={`/blogs/${blog.slug}`}>{blog.title}</Link>
+            </h2>
+            <div className='card-blog__header--category '>
+              {showBlogCategories(blog)}
+            </div>
+          </div>
+        </div>
+        <div className='card-blog__thumbnail'>
+          <Link href={`/blogs/${blog.slug}`}>
+            <img
+              src={`${API}/blog/photo/${blog.slug}`}
+              alt={blog.title}
+              className=''
+            />
+          </Link>
+        </div>
+        <div className='card-blog__desc'>
+          <div className='card-blog-desc__excerpt'>
+            {renderHTML(blog.excerpt)}
+          </div>
+          <div className='card-blog-desc__readmoreBtn'>
+            <Link href={`/blogs/${blog.slug}`}>
+              <a className='readmoreBtn'>
+                <span className='readmoreBtn__hoverEffect'>Read More</span>
+              </a>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
+  );
+};
+
+export default CardBlog;
+{
+  /* <div className='lead pb-4'>
       <header>
         <Link href={`/blogs/${blog.slug}`}>
           <a>
@@ -67,7 +126,5 @@ const CardBlog = ({ blog }) => {
         </div>
       </section>
     </div>
-  );
-};
-
-export default CardBlog;
+  ); */
+}
