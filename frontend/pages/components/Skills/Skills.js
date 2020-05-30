@@ -57,7 +57,7 @@ const Skills = () => {
                         <div className='skill-bar'>
                           <div
                             className={`skill-per ${isPerRun ? '' : 'css'}`}
-                            per='70%'
+                            per='80%'
                           ></div>
                         </div>
                       </div>
@@ -66,7 +66,7 @@ const Skills = () => {
                         <div className='skill-bar'>
                           <div
                             className={`skill-per ${isPerRun ? '' : 'js'}`}
-                            per='60%'
+                            per='70%'
                           ></div>
                         </div>
                       </div>
@@ -74,7 +74,7 @@ const Skills = () => {
 
                     <div className='col-md-6 col-12'>
                       <div className='skill'>
-                        <div className='skill-name'>HTML</div>
+                        <div className='skill-name'>MERN Stack</div>
                         <div className='skill-bar'>
                           <div
                             className={`skill-per ${isPerRun ? '' : 'react'}`}
@@ -83,19 +83,19 @@ const Skills = () => {
                         </div>
                       </div>
                       <div className='skill'>
-                        <div className='skill-name'>CSS</div>
+                        <div className='skill-name'>ASP .NET</div>
                         <div className='skill-bar'>
                           <div
-                            className={`skill-per ${isPerRun ? '' : 'net'}`}
-                            per='90%'
+                            className={`skill-per ${isPerRun ? '' : 'js'}`}
+                            per='70%'
                           ></div>
                         </div>
                       </div>
                       <div className='skill'>
-                        <div className='skill-name'>Javascript</div>
+                        <div className='skill-name'>MongoDB + MSSQL</div>
                         <div className='skill-bar'>
                           <div
-                            className={`skill-per ${isPerRun ? '' : 'db'}`}
+                            className={`skill-per ${isPerRun ? '' : 'js'}`}
                             per='70%'
                           ></div>
                         </div>

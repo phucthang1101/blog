@@ -1,3 +1,6 @@
+html{
+  scroll-behavior: smooth;
+}
 #nprogress .bar {
   height: 4px !important;
 }
@@ -207,6 +210,7 @@ a:hover{
 }
 .about-section__content--right .about-list li .value {
   position: relative;
+  color:black
 }
 .about-section__content--right .about-list li .value:before {
   content: '';
@@ -336,9 +340,9 @@ a:hover{
 
 .contact_section {
   position: relative;
-  height: 100vh;
+  height: 102vh;
   background: url('../images/skills7.jpg');
-  padding-top: 132px;
+  padding-top: 100px;
   -webkit-background-size: cover;
   background-size: cover;
   background-position: center center;
@@ -358,8 +362,8 @@ a:hover{
 }
 
 .contact-wrapper {
-  margin: 100px auto 0;
-  width: 70%;
+  margin: 0px auto 0;
+  width: 75%;
   max-width: 1000px;
   display: flex;
   justify-content: center;
@@ -375,14 +379,14 @@ a:hover{
   letter-spacing: 0.075em;
   font-weight: 300;
   text-transform: uppercase;
-  cursor: pointer;
+  cursor: text;
   text-decoration: none;
 }
 
 .contact-form .field {
   width: 100%;
   position: relative;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 .contact-form .field label {
@@ -405,7 +409,7 @@ a:hover{
   width: 100%;
   height: 64px;
   margin: 0;
-  padding-left: 19.5%;
+  padding-left: 25.5%;
   color: #313a3d;
 }
 
@@ -424,15 +428,18 @@ a:hover{
 .contact-form textarea:focus + label,
 .contact-form textarea:not(:placeholder-shown) + label,
 .contact-form .field:hover label {
-  width: 18%;
+  width: 25%;
 }
 .contact-form input[type='submit'] {
-  background: linear-gradient(90deg, #b13e8b, #812d65);
+  background: linear-gradient(90deg, #edf276, #e75953);
   -webkit-appearance: none;
-  border: none;
+  border: none !important;
   position: relative;
   padding: 13px 50px;
   transition: all 0.3s ease-in-out;
+  color: black;
+  --border-size:0px;
+  font-weight: 500;
 }
 .contact-form input[type='submit']:hover,
 .contact-form input[type='submit']:focus {
@@ -2316,7 +2323,7 @@ button:focus {outline:0;}
 }
 /*-------- 7. Services area starts ----------*/
 .section-padding {
-  padding: 60px 0;
+  padding: 80px 0;
 }
 
 .service {
@@ -2330,6 +2337,7 @@ button:focus {outline:0;}
   transition: 0.9s;
   background: black;
   /* border-color: white; */
+  height: 92%;
   border: 1px solid black;
 }
 
@@ -2341,7 +2349,7 @@ button:focus {outline:0;}
 .service-content {
   color: white;
 }
-/* 
+
 .service-box:hover:after {
   top: 0;
   height: 100%;
@@ -2370,7 +2378,7 @@ button:focus {outline:0;}
 .service-box:hover .before {
   width: 100%;
   transition: 0.9s;
-} */
+}
 
 .service-box:after {
   height: 80%;
@@ -2456,6 +2464,13 @@ svg {
     fill: #dad967;
    
   }
+}
+.service-content__desc{
+  padding-left: 10px;
+  text-align: left;
+}
+.service-content__desc li {
+  margin-bottom: 10px;
 }
 /*service end*/
 /*skills */
@@ -2670,7 +2685,7 @@ svg {
 }
 
 .net {
-  width: 80%;
+  width: 70%;
   animation: net 2s ease-out;
   -moz-animation: net 2s ease-out;
   -webkit-animation: net 2s ease-out;
@@ -2681,7 +2696,7 @@ svg {
   }
 
   100% {
-    width: 80%;
+    width: 70%;
   }
 }
 @-moz-keyframes net {
@@ -2690,7 +2705,7 @@ svg {
   }
 
   100% {
-    width: 80%;
+    width: 70%;
   }
 }
 
@@ -2740,7 +2755,7 @@ svg {
 }
 
 .react {
-  width: 70%;
+  width: 60%;
   animation: react 2s ease-out;
   -moz-animation: react 2s ease-out;
   -webkit-animation: react 2s ease-out;
@@ -2751,7 +2766,7 @@ svg {
   }
 
   100% {
-    width: 70%;
+    width: 60%;
   }
 }
 @-moz-keyframes react {
@@ -2760,7 +2775,7 @@ svg {
   }
 
   100% {
-    width: 70%;
+    width: 60%;
   }
 }
 
@@ -2770,7 +2785,7 @@ svg {
   }
 
   100% {
-    width: 70%;
+    width: 60%;
   }
 }
 

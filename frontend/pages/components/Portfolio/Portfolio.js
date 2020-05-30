@@ -97,16 +97,25 @@ const Portfolio = () => {
       </Modal>
       <section
         className='portfolio-area dark-version portfolio-one bg-color-3 section-padding clearfix'
-        id='portfolio'
+        id='section-6'
         style={{background:'#c5c5c5'}}
       >
+        <div className='service-title'>
+              <h2>
+                My <span>PORTFOLIO </span>
+              </h2>
+              <div className='horizontal-line'>
+                <div className='top'></div>
+                <div className='bottom'></div>
+              </div>
+            </div>
         <div id='myBtnContainer'>
           <button
             className='btn project-filter-btn active'
             onClick={() => filterSelection('all')}
           >
             {' '}
-            Show all<span></span>
+            ALL<span></span>
           </button>
           <button
             className='btn project-filter-btn'

@@ -7,7 +7,7 @@ const fs = require('fs');
 const _ = require('lodash');
 
 exports.create = (req, res) => {
-  console.log('create')
+  console.log('create');
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
   form.parse(req, (err, fields, files) => {
@@ -44,7 +44,7 @@ exports.create = (req, res) => {
 };
 
 exports.list = (req, res) => {
- // console.log('list:');
+  // console.log('list:');
   Category.find({}).exec((err, data) => {
     if (err) {
       return res.status(400).json({
@@ -57,7 +57,8 @@ exports.list = (req, res) => {
 
 exports.read = (req, res) => {
   const slug = req.params.slug.toLowerCase();
- //console.log('read')
+  //console.log('read')
+
   Category.findOne({ slug }).exec((err, category) => {
     if (err) {
       return res.status(400).json({
@@ -79,14 +80,26 @@ exports.read = (req, res) => {
             error: errorHandler(error),
           });
         }
-        res.json({ category: category, blogs: data });
+        // console.log(listCategories)
+        Category.find({}).exec((err, listCategories) => {
+          if (err) {
+            return res.status(400).json({
+              error: errorHandler(err),
+            });
+          }
+          res.json({
+            category: category,
+            blogs: data,
+            listCategories: listCategories,
+          });
+        });
       });
   });
 };
 
 exports.remove = (req, res) => {
   const slug = req.params.slug.toLowerCase();
- // console.log('remove')
+  // console.log('remove')
   Category.findOneAndRemove({ slug }).exec((err, data) => {
     if (err) {
       return res.status(400).json({
@@ -102,7 +115,7 @@ exports.remove = (req, res) => {
 
 exports.photo = (req, res) => {
   const slug = req.params.slug.toLowerCase();
-//console.log('category photo')
+  //console.log('category photo')
   Category.findOne({ slug })
     .select('categoryPhoto')
     .exec((err, category) => {
@@ -141,7 +154,7 @@ exports.update = (req, res) => {
       // const { name, categoryDesc } = fields;
       // oldCategory.name = name;
       // oldCategory.categoryDesc = categoryDesc;
-   //  console.log('oldCategory: ',oldCategory.photo)
+      //  console.log('oldCategory: ',oldCategory.photo)
       if (files.photo) {
         if (files.photo.size > 10000000) {
           return res.status(400).json({
@@ -154,7 +167,7 @@ exports.update = (req, res) => {
 
       oldCategory.save((err, result) => {
         if (err) {
-         // console.log('err: ',err)
+          // console.log('err: ',err)
           return res.status(400).json({
             error: errorHandler(err),
           });

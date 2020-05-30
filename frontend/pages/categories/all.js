@@ -1,15 +1,12 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
-import Layout from '../../components/Layout';
-import { useState, useEffect, useCallback } from 'react';
-import {
-  listBlogWithCategoriesAndTags,
-  listRelatedBlogs,
-} from '../../actions/blogAction';
-import CardBlog from '../../components/blog/CardBlog';
-import { API, DOMAIN, APP_NAME, FB_APP_ID } from '../../config';
+import { useEffect, useState } from 'react';
+import { listBlogWithCategoriesAndTags } from '../../actions/blogAction';
 import { singleCategory } from '../../actions/categoryAction';
+import CardBlog from '../../components/blog/CardBlog';
+import Layout from '../../components/Layout';
+import { APP_NAME, DOMAIN, FB_APP_ID } from '../../config';
 
 const Blogs = ({
   blogs,

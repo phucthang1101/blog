@@ -10,7 +10,10 @@ import renderHTML from 'react-render-html';
 import moment from 'moment';
 import CardBlog from '../../components/blog/CardBlog';
 
-const Categories = ({ category, blogs, query }) => {
+const Categories = ({ category, blogs, query, categories }) => {
+  const [separatorHeight, setSeparatorHeight] = useState(0);
+  const [categoryWithLength, setCategoryWithLength] = useState([]);
+
   const head = () => (
     <Head>
       <title>
@@ -40,10 +43,14 @@ const Categories = ({ category, blogs, query }) => {
       <meta name='fb:app_id' content={`${FB_APP_ID}`} />
     </Head>
   );
+  const setHeight = (height) => {
+    // console.log(height)
+    setSeparatorHeight(height);
+  };
   return (
     <React.Fragment>
       {head()}
-      <Layout>
+      <Layout categories={categories} activeSlide={category}>
         <main>
           <div className='container-fluid text-center'>
             <header>
@@ -51,7 +58,11 @@ const Categories = ({ category, blogs, query }) => {
                 <h1 className='display-4 font-weight-bold'>{category.name}</h1>
                 {blogs.map((blog, index) => (
                   <div>
-                    <CardBlog key={index} blog={blog}  />
+                    <CardBlog
+                      key={index}
+                      blog={blog}
+                      getHeightHeader={(height) => setHeight(height)}
+                    />
                     <hr />
                   </div>
                 ))}
@@ -69,8 +80,12 @@ Categories.getInitialProps = ({ query }) => {
     if (data.error) {
       console.log(data.error);
     } else {
-        
-      return { category: data.category, blogs: data.blogs, query };
+      return {
+        category: data.category,
+        blogs: data.blogs,
+        query,
+        categories: data.listCategories,
+      };
     }
   });
 };

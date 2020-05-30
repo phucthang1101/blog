@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import Scrollspy from 'react-scrollspy';
 import Particles from 'react-particles-js';
 import { typeWriter } from './typeWriter';
+import { DOMAIN } from '../../../config';
 
 const Home = () => {
   const [isOnTop, setIsOnTop] = useState(true);
- 
+
   const [isExpand, setIsExpand] = useState(false);
   const selector = useRef();
   useEffect(() => {
@@ -21,21 +22,22 @@ const Home = () => {
     });
   });
 
- 
   const onExpandMenu = () => {
     setIsExpand(!isExpand);
     document.body.classList.toggle('noscroll-active');
     document.querySelector('.hamburger').classList.toggle('hamburger--active');
   };
 
+  const closeMenu = () => {
+    setIsExpand(false);
+    document.body.classList.toggle('noscroll-active');
+    document.querySelector('.hamburger').classList.toggle('hamburger--active');
+  };
+
   return (
     <React.Fragment>
-    
-
       <section id='section-1' className='home-section'>
         <div className='home-banner__bg'>
-        
-
           <div
             className={`menu-area row mx-0  ${
               isExpand ? 'menu-area-active' : ''
@@ -66,7 +68,7 @@ const Home = () => {
             </div>
             {isExpand && (
               <React.Fragment>
-                <div className='particle-area'>
+                {/* <div className='particle-area'>
                   <Particles
                     params={{
                       particles: {
@@ -120,7 +122,7 @@ const Home = () => {
                       },
                     }}
                   />
-                </div>
+                </div> */}
                 <div className='nav-area'>
                   <nav>
                     <Scrollspy
@@ -138,48 +140,80 @@ const Home = () => {
                       currentClassName='active'
                     >
                       <li className=''>
-                        <a className='smooth-menu' href='#section-1'>
+                        <a
+                          onClick={closeMenu}
+                          className='smooth-menu'
+                          href='#section-1'
+                        >
                           Home
                         </a>
                       </li>
                       <li className=''>
-                        <a className='smooth-menu' href='#section-2'>
+                        <a
+                          onClick={closeMenu}
+                          className='smooth-menu'
+                          href='#section-2'
+                        >
                           About
                         </a>
                       </li>
 
                       <li className=''>
-                        <a className='smooth-menu' href='#section-3'>
+                        <a
+                          onClick={closeMenu}
+                          className='smooth-menu'
+                          href='#section-3'
+                        >
                           Skills
                         </a>
                       </li>
 
                       <li className=''>
-                        <a className='smooth-menu' href='#section-4'>
+                        <a
+                          onClick={closeMenu}
+                          className='smooth-menu'
+                          href='#section-4'
+                        >
                           Services
                         </a>
                       </li>
 
                       <li className=''>
-                        <a className='smooth-menu' href='#section-5'>
+                        <a
+                          onClick={closeMenu}
+                          className='smooth-menu'
+                          href='#section-5'
+                        >
                           Experience
                         </a>
                       </li>
 
                       <li className=''>
-                        <a className='smooth-menu' href='#section-6'>
+                        <a
+                          onClick={closeMenu}
+                          className='smooth-menu'
+                          href='#section-6'
+                        >
                           Portfolio
                         </a>
                       </li>
 
                       <li className=''>
-                        <a className='smooth-menu' href='#section-7'>
+                        <a
+                          onClick={closeMenu}
+                          className='smooth-menu'
+                          href={`${DOMAIN}/blogs`}
+                        >
                           Blog
                         </a>
                       </li>
 
                       <li className=''>
-                        <a className='smooth-menu' href='#section-8'>
+                        <a
+                          onClick={closeMenu}
+                          className='smooth-menu'
+                          href='#section-8'
+                        >
                           Contact
                         </a>
                       </li>
@@ -189,8 +223,6 @@ const Home = () => {
               </React.Fragment>
             )}
           </div>
-
-        
 
           <div className='banner-table'>
             <div className='banner-table-cell'>
@@ -228,7 +260,7 @@ const Home = () => {
                 <li>
                   <button className='button'>
                     <a
-                      href='https://www.facebook.com/'
+                      href='https://www.facebook.com/thang.tran.3576224'
                       target='_blank'
                       title='Facebook'
                       rel='noopener noreferrer'
@@ -242,7 +274,7 @@ const Home = () => {
                 <li>
                   <button className='button'>
                     <a
-                      href='https://twitter.com/'
+                      href='https://twitter.com/Thang97093659'
                       target='_blank'
                       title='Twitter'
                       rel='noopener noreferrer'
@@ -256,7 +288,7 @@ const Home = () => {
                 <li>
                   <button className='button'>
                     <a
-                      href='https://www.linkedin.com/'
+                      href='https://www.linkedin.com/in/thang-tran-5b80461a2/'
                       target='_blank'
                       title='Linkedin'
                       rel='noopener noreferrer'
@@ -270,12 +302,12 @@ const Home = () => {
                 <li>
                   <button className='button'>
                     <a
-                      href='https://plus.google.com/'
+                      href='https://github.com/phucthang1101'
                       target='_blank'
-                      title='Google Plus'
+                      title='Github'
                       rel='noopener noreferrer'
                     >
-                      <i className='fa fa-google-plus'></i>
+                      <i class='fa fa-github' aria-hidden='true'></i>
                     </a>
                     <div className='button__horizontal'></div>
                     <div className='button__vertical'></div>
@@ -284,12 +316,17 @@ const Home = () => {
                 <li>
                   <button className='button'>
                     <a
-                      href='https://www.pinterest.com/'
+                      href={`${DOMAIN}/blogs`}
                       target='_blank'
-                      title='Pinterest'
+                      title='Check out my blog'
                       rel='noopener noreferrer'
                     >
-                      <i className='fa fa-pinterest'></i>
+                      <img
+                        className='img img-fluid'
+                        style={{ verticalAlign: 'baseline' }}
+                        src='../../../static/images/blog.png'
+                        alt='blog'
+                      />
                     </a>
                     <div className='button__horizontal'></div>
                     <div className='button__vertical'></div>
@@ -298,7 +335,7 @@ const Home = () => {
               </ul>
             </div>
             <div className='mouse-area'>
-              <a className='mouse-scroll hidden-xs dadada' href='#about'>
+              <a className='mouse-scroll hidden-xs dadada' href='#section-2'>
                 <span className='mouse'>
                   <span className='mouse-movement'></span>
                 </span>

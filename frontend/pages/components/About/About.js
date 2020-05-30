@@ -11,12 +11,11 @@ const About = () => {
               About <span>Me </span>
             </h2>
             <div className='horizontal-line'>
-          <div className='top'></div>
-          <div className='bottom'></div>
-        </div>
+              <div className='top'></div>
+              <div className='bottom'></div>
+            </div>
           </div>
         </div>
-       
       </div>
       <div className='about-section__content row mx-5 mt-5'>
         <div className='col-md-5 col-sm-12'>
@@ -29,13 +28,13 @@ const About = () => {
             <h2>Front-End developer</h2>
             <p>
               I am <span>Matthew Tran</span>. I am a simple , co-operative,
-              responsible and weird person. I always analyze things carefully
-              before starting any work.
+              responsible and quite weird person. I always analyze things
+              carefully before starting any work.
             </p>
             <p>
-              I have vast experience in HTML5, CSS3, Javascript, JQuery, Node js
-              and on. I have already completed over 500 projecs of different
-              buyer throughout the world.{' '}
+              I have experience in HTML5, CSS3, Javascript, JQuery, ReactJS, ASP
+              .NET, NodeJS and on. I always look for an opportunity to gain more
+              knowledge and experience.{' '}
             </p>
 
             <div className='row'>
@@ -49,12 +48,17 @@ const About = () => {
                   <li>
                     {' '}
                     <span className='title'>Age</span>{' '}
-                    <span className='value'>20 Years</span>{' '}
+                    <span className='value'>21</span>{' '}
                   </li>
                   <li>
                     {' '}
                     <span className='title'>Email</span>{' '}
-                    <span className='value'>phucthangvt1101@gmail.com</span>{' '}
+                    <a
+                      class='montserrat weight-regular capitalize'
+                      href='mailto:phucthangvt1101@gmail.com'
+                    >
+                      <span className='value'>phucthangvt1101@gmail.com</span>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -74,7 +78,7 @@ const About = () => {
                     {' '}
                     <span className='title'>Hobby</span>{' '}
                     <span className='value'>
-                      Coding , Blowing balloons by my nose
+                      Coding, Sport, Books
                     </span>{' '}
                   </li>
                 </ul>
@@ -85,7 +89,7 @@ const About = () => {
                 <div className='top door'></div>
                 <div className='bottom door'></div>
                 <a
-                  href='#contact'
+                  href='#section-8'
                   className='twitter-follow-button'
                   data-show-count='false'
                   data-size='large'

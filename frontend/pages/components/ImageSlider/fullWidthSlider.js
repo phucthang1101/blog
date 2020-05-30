@@ -33,7 +33,6 @@ const FullWidthSlider = (props) => {
   const transitionRef = useRef();
   const resizeRef = useRef();
 
-
   useEffect(() => {
     autoPlayRef.current = nextSlide;
     transitionRef.current = smoothTransition;
@@ -143,7 +142,7 @@ const FullWidthSlider = (props) => {
   };
 
   const dotsHandleClick = (index) => {
-    console.log('index: ',index)
+    // console.log('index: ',index)
     let h1Text = document.getElementById('reveal-hide-text');
     h1Text.className += ' hide-text';
 
@@ -161,10 +160,10 @@ const FullWidthSlider = (props) => {
       <div className='row mx-0 slider-header'>
         <span className='blog-home__brand-name'>MATTHEW</span>
         <FullWidthNav
-        slides={slides}
-         activeSlide={activeSlide}
-        handleDotsClick={dotsHandleClick}
-      />
+          slides={slides}
+          activeSlide={activeSlide}
+          handleDotsClick={dotsHandleClick}
+        />
       </div>
       <div
         css={css`

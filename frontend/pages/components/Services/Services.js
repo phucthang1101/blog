@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import SvgIcon from './svgIcons';
+import { DOMAIN } from '../../../config';
 
 const Services = () => {
- 
-  const turnOnHover = (e) => e.target.classList += ' hovered';
+  const turnOnHover = (e) => (e.target.classList += ' hovered');
   return (
     <section id='section-4' className='service_area'>
       <div className='services-area ' id='services'>
-        <div className='container'>
+        <div className='container-fluid'>
           <div className='row mx-0 mb-40'>
             <div className='service-title'>
               <h2>
@@ -19,7 +19,7 @@ const Services = () => {
               </div>
             </div>
           </div>
-          <div className='row'>
+          <div className='row mx-4'>
             <div className='col-md-3 col-sm-6 service'>
               <div className='service-box' onMouseEnter={turnOnHover}>
                 <span className='after'></span>
@@ -49,12 +49,18 @@ const Services = () => {
                 </div>
 
                 <div className='service-content'>
-                  <h4>Database</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Aut, id laboriosam maxime nam neque nulla placeat quam
-                    repudiandae similique ullam?
-                  </p>
+                  <h4 className='service-content__title'>Database</h4>
+                  <ul className='service-content__desc'>
+                    <li>
+                      Gathering information from client, analyzing, developing
+                      and maintaining database.
+                    </li>
+                    <li>
+                      Creating management methods to access efficiently to
+                      information store in database.
+                    </li>
+                    <li>Familiar with MSSQL (T-SQL) and MongoDB(NoSQL)</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -89,11 +95,20 @@ const Services = () => {
                 </div>
                 <div className='service-content'>
                   <h4>Web Development</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Aut, id laboriosam maxime nam neque nulla placeat quam
-                    repudiandae similique ullam?
-                  </p>
+                  <ul className='service-content__desc'>
+                    <li>
+                      Creating <b>Responsive</b> frontend using HTML/CSS/JS or
+                      ReactJS base on design file(.psd, .pdf).
+                    </li>
+                    <li>
+                      Working with server-side languages NodeJS ( ExpressJS )
+                      and C# ( ASP.NET MVC ) to build Backend or API.
+                    </li>
+                    <li>
+                      Maintaining and expanding/enhancing the website once
+                      built.
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -164,11 +179,21 @@ const Services = () => {
                 </div>
                 <div className='service-content'>
                   <h4>Content Writing</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Aut, id laboriosam maxime nam neque nulla placeat quam
-                    repudiandae similique ullam?
-                  </p>
+                  <ul className='service-content__desc'>
+                    <li>
+                      Assisting marketing team in developing content for
+                      advertising campaigns.
+                    </li>
+                    <li>
+                      Have experience in writing SEO-optimized and
+                      reader-friendly article.
+                    </li>
+                    <li>
+                      <a href={`${DOMAIN}/blogs`} title="Matthew's Blog">
+                        Visit my blogs to have a closer look !
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -208,11 +233,16 @@ const Services = () => {
                 </div>
                 <div className='service-content'>
                   <h4>SEO (Search Engine Optimisation) Optimize</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Aut, id laboriosam maxime nam neque nulla placeat quam
-                    repudiandae similique ullam?
-                  </p>
+                  <ul className='service-content__desc'>
+                    <li>Understanding of search engine and ranking methods.</li>
+                    <li>
+                      Experience with SEO programs, such as Google Analytics .
+                    </li>
+                    <li>
+                      Research SEO keywords to use throughout the company's
+                      website and marketing materials.
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
