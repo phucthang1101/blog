@@ -2,8 +2,10 @@ import Link from 'next/link';
 import renderHTML from 'react-render-html';
 import { useState, useEffect } from 'react';
 import { listSearch } from '../../actions/blogAction';
+import SimpleBar from 'simplebar-react';
+import { API } from '../../config';
 
-const SearchBlog = () => {
+const SearchBlog = (props) => {
   const [values, setValues] = useState({
     search: undefined,
     results: [],
@@ -20,7 +22,7 @@ const SearchBlog = () => {
         ...values,
         results: data,
         searched: true,
-        message: `${data.length} blogs found`,
+        message: `${data.length}`,
       });
     });
   };
@@ -36,45 +38,92 @@ const SearchBlog = () => {
 
   const searchBlogs = (results = []) => {
     return (
-      <div className='jumbotron bg-white'>
-        {message && <p className='pt-4 text-muted font-italic'>{message}</p>}
+      <div className='c-search-product__wrap row mx-0'>
         {results.map((blog, index) => (
-          <div key={index}>
+          <div className='col-12 col-md-6 c-search-product' key={index}>
             <Link href={`/blogs/${blog.slug}`}>
-              <a className='text-primary'>{blog.title}</a>
+              <a className='text-primary c-search-product_link'>
+                <img
+                  src={`${API}/blog/photo/${blog.slug}`}
+                  alt={blog.title}
+                  className=''
+                />
+                <div class='c-search-product_text'>
+                  <h3>
+                    <span className='underline'>{blog.title}</span>
+                  </h3>
+                  <p> {renderHTML(blog.excerpt)}</p>
+                </div>
+              </a>
             </Link>
           </div>
         ))}
       </div>
     );
   };
+
   const searchForm = () => (
-    <form onSubmit={searchSubmit}>
+    <form className='c-search' onSubmit={searchSubmit}>
       <div className='row mx-auto'>
-        <div className='col-md-8'>
+        <div className='col-12 col-md-9'>
           <input
             type='search'
-            className='form-control'
+            className='c-search_input js-search-input'
             placeholder='Search blogs'
             onChange={handleChange}
           />
         </div>
-        <div className='col-md-4'>
-          <button className='btn btn-block btn-outline-primary' type='submit'>
+        <div className='col-6 mx-auto col-md-3'>
+          {/* <button className='btn btn-block btn-outline-primary' type='submit'>
             Search
+          </button> */}
+          <button
+            className='contact-form__submitBtn'
+            title='Search'
+            type='submit'
+          >
+            <span>Search</span>
+            <svg class='c-arrow -right -black'>
+              <svg id='arrow-right' viewBox='0 0 32 32'>
+                <path class='cst0' d='M2.3 0l27.5 16L2.3 32V0z'></path>
+              </svg>
+            </svg>
           </button>
         </div>
       </div>
     </form>
   );
+
   return (
-    <div className='container-fluid'>
-      <div className='pt-3 pb-5'>{searchForm()}</div>
-      {searched && (
-        <div style={{ marginTop: '-120px', marginBottom: '-80px' }}>
-          {searchBlogs(results)}
-        </div>
-      )}
+    <div class='c-search-overlay' style={{ top: props.headerHeight + 'px' }}>
+      <div class='c-search_wrap'>
+        <SimpleBar
+          id='simepleBarSearchBlog'
+          forceVisible='y'
+          style={{ height: '100%' }}
+        >
+          <div class='SearchBlog-container'>
+            {searchForm()}
+
+            <div class='o-grid'>
+              <div class='o-whole'>
+                <div class={`c-search-number ${!!message ? 'is-active' : ''}`}>
+                  Blog <span></span>{' '}
+                  <b class='js-search-product-count'>{message ? message : 0}</b>
+                </div>
+                {/* {message && <p className='pt-4 text-muted font-italic'>{message}</p>} */}
+                <div class='o-grid js-products-search-results'>
+                  {searched && (
+                    <div>
+                      {searchBlogs(results)}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </SimpleBar>
+      </div>
     </div>
   );
 };

@@ -9,7 +9,7 @@ const CardBlog = (props) => {
   const headerBlog = useRef(null);
 
   useEffect(() => {
-    console.log(headerBlog.current.clientHeight)
+   // console.log(headerBlog.current.clientHeight)
    // console.log(key)
     props.getHeightHeader(headerBlog.current.clientHeight)
     

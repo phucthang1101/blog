@@ -145,7 +145,7 @@ const Blogs = ({
             length: blogsByCategory.blogs.length,
           };
         } catch (error) {
-          next(error);
+          console.log(error);
         }
       })
     );
@@ -165,7 +165,7 @@ const Blogs = ({
     //console.log('loadedBlogs: ', loadedBlogs);
     return loadedBlogs.map((blog, index) => (
       <article key={index}>
-        <CardBlog blog={blog} />
+        <CardBlog blog={blog} getHeightHeader={(height) => setHeight(height)} />
       </article>
     ));
   };
@@ -196,8 +196,8 @@ const Blogs = ({
     <React.Fragment>
       {head()}
       <Layout categories={categories} activeSlide={categories[0].name}>
+      
         <div>
-         
           <div className='container-fluid all-blogs-inner'>
             <div className='row mx-auto'>
               <div className='col-12 col-md-9'>{showAllBlogs()}</div>
@@ -234,9 +234,10 @@ const Blogs = ({
                   </div>
                 </aside>
               </div>
+              <div className='col-12 col-md-9'>{showLoadedBlogs()}</div>
             </div>
           </div>
-          <div className='container-fluid'>{showLoadedBlogs()}</div>
+          
           <div className='text-center pt-5 pb-5 text-center'>
             {loadMoreButton()}
           </div>

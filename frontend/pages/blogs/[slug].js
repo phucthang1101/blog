@@ -14,8 +14,10 @@ import {
   createComment,
   createCommentReply,
 } from '../../actions/commentAction';
+import { singleCategory } from '../../actions/categoryAction';
 
-const SingleBlog = ({ blog, router, query }) => {
+const SingleBlog = ({ blog, router, query, categories }) => {
+  // console.log(blog.categories[0].name);
   const [relatedBlogs, setRelatedBlogs] = useState([]);
   const [comments, setComments] = useState([]);
   const [replyCommentShowing, setReplyCommentShowing] = useState(false);
@@ -78,11 +80,9 @@ const SingleBlog = ({ blog, router, query }) => {
 
   const showRelatedBlogs = () => {
     return relatedBlogs.map((blog, index) => (
-      <div key={index} className='col-md-4'>
-        <article>
-          <CardRelatedBlog blog={blog} />
-        </article>
-      </div>
+     
+          <CardRelatedBlog  key={index} blog={blog} />
+     
     ));
   };
 
@@ -114,7 +114,7 @@ const SingleBlog = ({ blog, router, query }) => {
     blog.categories.map((category, index) => {
       return (
         <Link key={index} href={`/categories/${category.slug}`}>
-          <a className='btn btn-primary mr-1 ml-1 mt-3'>{category.name}</a>
+          <a className=''>{category.name}</a>
         </Link>
       );
     });
@@ -190,7 +190,7 @@ const SingleBlog = ({ blog, router, query }) => {
             <p>{comment.email}</p>
             {comment.commentText}
             {comment.reply.map((reply, replyIndex) => {
-            console.log(reply)
+              //   console.log(reply)
               return (
                 <div key={replyIndex} className='media-body ml-5 mt-2'>
                   <h5 className='mt-0 mb-1'>{reply.username}</h5>
@@ -288,100 +288,127 @@ const SingleBlog = ({ blog, router, query }) => {
 
   return (
     <React.Fragment>
+    
       {head()}
-   
+      <div>
         <main>
           <article>
-            <div className='container-fluid'>
-              <section>
-                <div className='row mx-auto' style={{ marginTop: '-30px' }}>
-                  <img
-                    src={`${API}/blog/photo/${blog.slug}`}
-                    alt={blog.title}
-                    className='img img-fluid featured-image'
-                  />
-                </div>
-              </section>
-              <section>
-                <div className='container'>
-                  <h1 className=' pb-3 text-center font-weight-bold'>
-                    {blog.title}
-                  </h1>
-                  <p className='lead mt-3 mark'>
-                    Written by {blog.postedBy.name} | Published in{' '}
-                    {moment(blog.updatedAt).format('MMMM Do YYYY')}
+            <Layout
+              categories={categories}
+              activeSlide={blog.categories[0].name}
+              singleBlog={true}
+              page='layout'
+            >
+              <div className='container-fluid single-blog__header p-0'>
+                <section className='single-blog__header-section'>
+                  <div
+                    className='row mx-auto single-blog__header-bg'
+                    style={{
+                      backgroundImage:
+                        'url(' + `${API}/blog/photo/${blog.slug}` + ')',
+                    }}
+                  ></div>
+                </section>
+                <section className='single-blog__datetime-section'>
+                  <div className='container'>
+                    <h1 className='text-center font-weight-bold py-0 my-0 single-blog__title'>
+                      {blog.title}
+                    </h1>
+                    <div className='single-blog__datetime-wrapper'>
+                      <hr className='datetime__horizontal-line' />
+                      <p className='single-blog__date-time py-0 my-0'>
+                        {moment(blog.updatedAt).format('MMMM Do YYYY')}
+                      </p>
+                      <hr className='datetime__horizontal-line' />
+                    </div>
+                  </div>
+
+                  <div className='single-blog__leading-section'>
+                    <p className='single-blog__leading-text'>
+                      <a href={`${DOMAIN}/blogs`}>Home</a> -{' '}
+                      <a
+                        href={`${DOMAIN}/categories/${blog.categories[0].slug}`}
+                      >
+                        {blog.categories[0].name}
+                      </a>
+                      - {blog.title}
+                    </p>
+                  </div>
+                </section>
+              </div>
+
+              <div className='container'>
+                <section>
+                  <div className='col-md-12 single-blog__content'>
+                    {renderHTML(blog.body)}
+                  </div>
+                </section>
+              </div>
+
+              <div className='container-fluid py-5'>
+                <div className='single-blog__relatedBlogs-wrapper mb-3'>
+                  <hr className='relatedBlogs__horizontal-line' />
+                  <p className='single-blog__related-blogs py-0 my-0'>
+                    Related Blogs
                   </p>
+                  <hr className='relatedBlogs__horizontal-line' />
                 </div>
 
-                <div className='pb-3'>
-                  {showBlogCategories(blog)}
-                  {showBlogTags(blog)}
-                  <br />
-                  <br />
-                </div>
-              </section>
-            </div>
-
-            <div className='container'>
-              <section>
-                <div className='col-md-12 lead'>{renderHTML(blog.body)}</div>
-              </section>
-            </div>
-
-            <div className='container pb-5'>
-              <h4 className='text-center pt-5 pb-5 h2'>Related Blogs</h4>
-              <hr />
-              <div className='row mx-auto'>{showRelatedBlogs()}</div>
-            </div>
-            <div className='container pb-5'>
-              <div className='row mx-auto'>
-                <div className='col-md-12'>
-                  <ul className='list-unstyled'>{showBlogComments()}</ul>
+                <div className='row mx-auto'>
+                  <div className='card-group'>{showRelatedBlogs()}</div>
                 </div>
               </div>
               <div className='container pb-5'>
-                <hr />
-                <form onSubmit={submitComment}>
-                  <h5>Leave a comment</h5>
-                  <div className='form-group'>
-                    <input
-                      type='text'
-                      value={username}
-                      onChange={handleChange('username')}
-                      name='username'
-                      placeholder='Username'
-                      className='form-control'
-                    />
+                <div className='row mx-auto'>
+                  <div className='col-md-12'>
+                    <ul className='list-unstyled'>{showBlogComments()}</ul>
                   </div>
-                  <div className='form-group'>
-                    <input
-                      type='text'
-                      value={email}
-                      onChange={handleChange('email')}
-                      name='email'
-                      placeholder='Email'
-                      className='form-control'
-                    />
-                  </div>
-                  <div className='form-group'>
-                    <textarea
-                      value={commentText}
-                      onChange={handleChange('commentText')}
-                      type='text'
-                      name='comment'
-                      row={3}
-                      className='form-control'
-                      placeholder='Comment...'
-                    />
-                  </div>
-                  <button type='submit' className='btn btn-primary'>
-                    Submit
-                  </button>
-                </form>
+                </div>
+                <div className='container pb-5'>
+                  <hr />
+                  <form onSubmit={submitComment}>
+                    <h5>Leave a comment</h5>
+                    <div className='form-group'>
+                      <input
+                        type='text'
+                        value={username}
+                        onChange={handleChange('username')}
+                        name='username'
+                        placeholder='Username'
+                        className='form-control'
+                      />
+                    </div>
+                    <div className='form-group'>
+                      <input
+                        type='text'
+                        value={email}
+                        onChange={handleChange('email')}
+                        name='email'
+                        placeholder='Email'
+                        className='form-control'
+                      />
+                    </div>
+                    <div className='form-group'>
+                      <textarea
+                        value={commentText}
+                        onChange={handleChange('commentText')}
+                        type='text'
+                        name='comment'
+                        row={3}
+                        className='form-control'
+                        placeholder='Comment...'
+                      />
+                    </div>
+                    <button type='submit' className='btn btn-primary'>
+                      Submit
+                    </button>
+                  </form>
+                </div>
               </div>
-            </div>
+            </Layout>
           </article>
         </main>
+      </div>
      
     </React.Fragment>
   );
@@ -389,14 +416,26 @@ const SingleBlog = ({ blog, router, query }) => {
 
 //this will get slug before client side was rendered so we can only access slug parameter through query instead of router
 //router is used when client side was rendered successfully
-SingleBlog.getInitialProps = ({ query }) => {
-  return readBlog(query.slug).then((data) => {
-    if (data.error) {
-      console.log(data.error);
-    } else {
-      return { blog: data, query };
-    }
-  });
+// SingleBlog.getInitialProps = ({ query }) => {
+//   return readBlog(query.slug).then((data) => {
+//     if (data.error) {
+//       console.log(data.error);
+//     } else {
+//       return { blog: data, query };
+//     }
+//   });
+// };
+SingleBlog.getInitialProps = async ({ query }) => {
+  let blog;
+  let categoriesList;
+  try {
+    blog = await readBlog(query.slug);
+    categoriesList = await singleCategory(query.slug);
+  } catch (error) {
+    console.log(error);
+    // next(error)
+  }
+  return { blog, query, categories: categoriesList.listCategories };
 };
 
 export default withRouter(SingleBlog);

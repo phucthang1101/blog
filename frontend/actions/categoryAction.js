@@ -33,10 +33,16 @@ export const getCategories = () => {
 };
 
 
-export const singleCategory = (slug) => {
- 
+export const singleCategory = (slug,skip,limit) => {
+  const data = { skip,limit };
+  //console.log('data: ',data)
   return fetch(`${API}/category/${slug}`, {
-    method: 'GET',
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
   })
     .then((response) => {
       return response.json();

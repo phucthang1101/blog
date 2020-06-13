@@ -149,7 +149,7 @@ const CategoryUpdateDeleteComponent = ({ router }) => {
         </div>
         <div className='form-group'>
           <label className='text-muted'>Description</label>
-          <input
+          <textarea
             value={categoryDesc}
             type='text'
             className='form-control'

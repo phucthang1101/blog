@@ -51,13 +51,16 @@ exports.list = (req, res) => {
         error: errorHandler(err),
       });
     }
+   // console.log(data)
     res.json(data);
   });
 };
 
 exports.read = (req, res) => {
   const slug = req.params.slug.toLowerCase();
-  //console.log('read')
+  console.log('read')
+  let limit = req.body.limit ? parseInt(req.body.limit) : 10;
+  let skip = req.body.skip ? parseInt(req.body.skip) : 0;
 
   Category.findOne({ slug }).exec((err, category) => {
     if (err) {
@@ -67,7 +70,44 @@ exports.read = (req, res) => {
     }
     //later will response blog that in same category
     // res.json(category);
-    Blog.find({ categories: category, showing: true })
+    if(skip !== 0 || limit !== 10)
+    {
+      //console.log('limit: ',skip)
+      Blog.find({ categories: category, showing: true })
+      .populate('categories', '_id name slug')
+      .populate('tags', '_id name slug')
+      .populate('postedBy', '_id name')
+      .skip(skip)
+      .limit(limit)
+      .select(
+        '_id title slug excerpt categories postedBy tags createdAt updatedAt'
+      )
+      .exec((error, data) => {
+        if (error) {
+          return res.status(400).json({
+            error: errorHandler(error),
+          });
+        }
+        // console.log(listCategories)
+        Category.find({}).exec((err, listCategories) => {
+          if (err) {
+            return res.status(400).json({
+              error: errorHandler(err),
+            });
+          }
+          res.json({
+            category: category,
+            blogs: data,
+            listCategories: listCategories,
+            size: data.length
+          });
+         
+        });
+      });
+    }
+    else{
+     // console.log('not limit: ',skip)
+      Blog.find({ categories: category, showing: true })
       .populate('categories', '_id name slug')
       .populate('tags', '_id name slug')
       .populate('postedBy', '_id name')
@@ -91,9 +131,12 @@ exports.read = (req, res) => {
             category: category,
             blogs: data,
             listCategories: listCategories,
+          
           });
         });
       });
+    }
+   
   });
 };
 

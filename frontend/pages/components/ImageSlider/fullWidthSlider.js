@@ -162,6 +162,7 @@ const FullWidthSlider = (props) => {
         <FullWidthNav
           slides={slides}
           activeSlide={activeSlide}
+          page='slider'
           handleDotsClick={dotsHandleClick}
         />
       </div>

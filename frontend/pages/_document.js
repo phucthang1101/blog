@@ -27,16 +27,23 @@ class MyDocument extends Document {
             rel='stylesheet'
             href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
           />
-<script src="https://kit.fontawesome.com/d174fcfea6.js" crossorigin="anonymous"></script>
+          <link
+            rel='stylesheet'
+            href='https://unpkg.com/simplebar@latest/dist/simplebar.css'
+          />
+          <script
+            src='https://kit.fontawesome.com/d174fcfea6.js'
+            crossorigin='anonymous'
+          ></script>
           <link rel='stylesheet' href='/static/css/styles.css' />
         </Head>
         <body>
-        <div id='backdrop-hook'></div>
+          <div id='backdrop-hook'></div>
           <div id='modal-hook'></div>
           <Main />
-        
+
           <NextScript />
-        
+
           <script
             src='https://code.jquery.com/jquery-3.2.1.slim.min.js'
             integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN'

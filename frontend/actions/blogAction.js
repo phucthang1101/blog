@@ -20,6 +20,7 @@ export const createBlog = (blog, token) => {
 
 export const listBlogWithCategoriesAndTags = (skip, limit) => {
   const data = { limit, skip };
+  //console.log(data)
   return fetch(`${API}/blogs-categories-tags`, {
     method: 'POST',
     headers: {

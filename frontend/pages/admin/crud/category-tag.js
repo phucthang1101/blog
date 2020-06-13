@@ -6,7 +6,7 @@ import TagComponent from '../../../components/crud/TagComponent';
 
 const CategoryTag = () => {
   return (
-    <Layout>
+  
       <Admin>
         <div className='container-fluid'>
           <div className='row'>
@@ -22,7 +22,7 @@ const CategoryTag = () => {
           </div>
         </div>
       </Admin>
-    </Layout>
+   
   );
 };
 

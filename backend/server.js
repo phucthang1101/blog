@@ -40,6 +40,7 @@ mongoose
 
 //middlewares
 app.use(morgan('dev'));
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 //cors
@@ -57,10 +58,17 @@ app.use('/api',commentRoutes)
 //app.get() takes two arguments:
 // First is the endpoint (ex '/api')
 // Second is the function
+var timeout = require('connect-timeout'); //express v4
 
+app.use(timeout(1200));
+app.use(haltOnTimedout);
+
+function haltOnTimedout(req, res, next){
+  if (!req.timedout) next();
+}
 //port
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
+ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

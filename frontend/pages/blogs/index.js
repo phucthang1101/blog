@@ -21,11 +21,11 @@ const Blogs = ({ router, categories }) => {
     setActiveSlide(activeSlide);
   };
 
-  const showCategoriesSlider = () => {
+  const showCategoriesSlider =  () => {
     var tempSlides = [];
     for (var i = 0; i < categories.length; i++) {
       let tempSlide = { images: '', caption: '', name: '', index: 0, slug: '' };
-      tempSlide.images = `${API}/category/photo/${categories[i].slug}`;
+      tempSlide.images =  `${API}/category/photo/${categories[i].slug}`;
       tempSlide.caption = categories[i].categoryDesc;
       tempSlide.name = categories[i].name;
       tempSlide.index = i;

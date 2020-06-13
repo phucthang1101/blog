@@ -34,7 +34,7 @@ const BlogUpdateComponent = ({ router }) => {
     success: '',
     formData: '',
     title: '',
-    showing: false,
+    showing: '',
    
   });
 
@@ -200,6 +200,7 @@ const BlogUpdateComponent = ({ router }) => {
 
   const handleChange = (name) => (e) => {
     //console.log(e.target.value);
+    console.log(name)
     const value =
       name === 'photo'
         ? e.target.files[0]
@@ -222,6 +223,7 @@ const BlogUpdateComponent = ({ router }) => {
   const handleBody = (e) => {
     setBody(e);
     formData.set('body', e);
+    formData.set('showing', showing);
   };
 
   const editBlog = (event) => {

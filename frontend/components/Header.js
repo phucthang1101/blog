@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Router from 'next/router';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Collapse,
   Nav,
@@ -20,31 +20,54 @@ Router.onRouteChangeStart = (url) => NProgress.start();
 Router.onRouteChangeComplete = (url) => NProgress.done();
 Router.onRouteChangeError = (url) => NProgress.done();
 
-const Header = (props) => {
+const Header = (props, scrollableNodeRef) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOnTop, setIsOnTop] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
+  // console.log(props.singleBlog)
+
+  const header = useRef(null);
+
   useEffect(() => {
-    document.addEventListener('scroll', () => {
-      const scrollCheck = window.scrollY < 100;
-      if (scrollCheck !== isOnTop) {
-        setIsOnTop(scrollCheck);
-      }
-    });
+    let scrollbar = props.scrollableNodeRef.current
+      ? props.scrollableNodeRef.current
+      : '';
+    if (scrollbar !== '') {
+      // console.log(scrollbar.getScrollElement())
+      scrollbar.getScrollElement().addEventListener('scroll', () => {
+        const scrollCheck = scrollbar.getScrollElement().scrollTop < 100;
+        if (scrollCheck !== isOnTop) {
+          setIsOnTop(scrollCheck);
+        }
+      });
+    }
   });
+
   return (
     <React.Fragment>
       <div className='layout-header__area row mx-0'>
         <div
+          ref={header}
           className={`row mx-0 layout-header__content ${
             isOnTop ? '' : 'layout-header__sticky-navigation'
           }`}
-        
         >
-          <span className='blog-home__brand-name'>MATTHEW</span>
+          <span
+            className='blog-home__brand-name'
+            style={{
+              color: props.singleBlog ? 'white' : '',
+              borderColor: props.singleBlog ? 'white' : '',
+            }}
+          >
+            MATTHEW
+          </span>
+
           <FullWidthNavs
             slides={props.categories}
             activeSlide={props.activeSlide}
+            page='layout'
+            singleBlog={props.singleBlog}
+            headerHeight={header.current ? header.current.clientHeight : 0}
             //  handleDotsClick={dotsHandleClick}
           />
         </div>
@@ -56,63 +79,5 @@ const Header = (props) => {
 export default Header;
 {
   /*
-    <SearchBlog/>
-     <Navbar color='light' light expand='md'>
-<Link href='/'>
-  <NavbarBrand style={{ cursor: 'pointer' }}>{APP_NAME}</NavbarBrand>
-</Link>
-<NavbarToggler onClick={toggle} />
-<Collapse isOpen={isOpen} navbar>
-  <Nav className='ml-auto' navbar>
-  <NavItem>
-          <Link href='/blogs'>
-            <NavLink style={{ cursor: 'pointer' }}>Blogs</NavLink>
-          </Link>
-        </NavItem>
-    {!isAuth() && (
-      <React.Fragment>
-        <NavItem>
-          <Link href='/signup'>
-            <NavLink style={{ cursor: 'pointer' }}>Sign Up</NavLink>
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link href='/signin'>
-            <NavLink style={{ cursor: 'pointer' }}>Sign In</NavLink>
-          </Link>
-        </NavItem>
-      </React.Fragment>
-    )}
-    {isAuth() && (
-      <NavItem>
-        <NavLink
-          style={{ cursor: 'pointer' }}
-          onClick={() => signout(() => Router.replace('/signin'))}
-        >
-          Sign Out
-        </NavLink>
-      </NavItem>
-    )}
-
-    {isAuth() && isAuth().role === 0 && (
-      <NavItem>
-        <Link href='/user'>
-          <NavLink style={{ cursor: 'pointer' }}>
-            {`${isAuth().name}'s Dashboard`}
-          </NavLink>
-        </Link>
-      </NavItem>
-    )}
-    {isAuth() && isAuth().role === 1 && (
-      <NavItem>
-        <Link href='/admin'>
-          <NavLink style={{ cursor: 'pointer' }}>
-            {`${isAuth().name}'s Dashboard`}
-          </NavLink>
-        </Link>
-      </NavItem>
-    )}
-  </Nav>
-</Collapse>
-</Navbar> */
+   */
 }
